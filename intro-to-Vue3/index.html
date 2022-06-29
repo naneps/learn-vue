@@ -12,7 +12,19 @@
     <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
   </head>
   <body>
-    <div id="app" class="container-fluid p-3">
+
+    <div id="app" class="container-fluid m-2">
+      <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand">Navbar</a>
+          <div class="d-flex">
+            <button class="btn rounded-pill " style="width: 100px; height: 60px; background-color:rgba(203, 255, 185, 0.896);">
+              <p class="text-center fs-5 fw-bold">Cart</p>
+            </button>
+          </form>
+        </div>
+      </nav>
+
       <div class="row">
         <div class="col-4">
         <h1>Selamat Berbelanja</h1>
@@ -21,12 +33,33 @@
           <div class="container p-2">
             <div class="row">
               <div class="col-4">
-                <div class="card" style="width: 18rem;">
-                  <img v-bind:src=" product.image" class="card-img-top" alt="...">
+                <div class="card p-2 position-relative" style="width: 18rem;">
+                 
+
+                    <div class="position-absolute top-0 end-0 m-2 ">
+                      <span  v-show="product.onSale" class="badge rounded-pill fw-bold fs-5" style="background-color: rgb(243, 210, 126);"> On Sale</span>
+                    </div>
+
+              
+                  <img :src=" product.image" class="card-img-top" :alt="product.name">
                   <div class="card-body">
-                    <h5 class="card-title">{{ product.name }}</h5>
+                    
+                    <h5 class=("card-title">{{ product.name }}</h5>
                     <p class="card-text">{{ product.description}}</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div  class="row rounded-2 p-1 m-auto text-center "  style="background-color: rgb(160, 160, 160); " > 
+                      <p class="col fs-6 fw-bold text-center text-white m-auto" v-for="detail in product.details"> {{ detail }}</p>
+                    </div>
+                        <span v-for="variant in product.variants" class="bagde bg-secondary ms-2" >{{ variant.color }} </span>
+                      <div class="row m-auto">
+
+                        <span  v-if="product.inventory > 10" class="badge ps-3 pe-3" style="background-color: rgb(32, 198, 3); font-size: 16px;"> In Stock</span>
+                        <span v-else-if="product.inventory <= 10 && product.inventory >0 " class="badge ps-3 pe-3" style="background-color: rgb(252, 204, 100); font-size: 16px;"> Almost Sold Out</span>
+                        <span v-else class="badge ps-3 pe-3" style="background-color: rgb(252, 125, 100); font-size: 16px;">  Sold Out</span>
+                        <!-- <a style="background-color: rgb(154, 107, 255);" :href="product.url "class="btn btn-primary" target="_blank">Cekout</a> -->
+                        <button style="background-color: rgb(154, 107, 255);" :href="product.url "class="btn btn-primary mt-2" target="_blank">Add Cart</button>
+                      </div> 
+
+                
                   </div>
                 </div>
               </div>
@@ -42,6 +75,8 @@
     <script src="./main.js"></script>
     <script>
       const mountedApp = app.mount('#app')
+
+    
     </script>
   </body>
 </html>
